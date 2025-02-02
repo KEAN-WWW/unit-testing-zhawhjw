@@ -31,10 +31,30 @@ jobs:
         command: pytest tests/test_subtraction.py --pylint
         timeout: 10
         max-score: 10
+    - name: Multiplication Test
+      id: multiplication-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Multiplication Test
+        setup-command: pip install -r requirements.txt
+        command: pytest tests/test_multiplication.py --pylint
+        timeout: 10
+        max-score: 10
+    - name: Division Test
+      id: division-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Division Test
+        setup-command: pip install -r requirements.txt
+        command: pytest tests/test_division.py --pylint
+        timeout: 10
+        max-score: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         ADDITION-TEST_RESULTS: "${{steps.addition-test.outputs.result}}"
         SUBTRACTION-TEST_RESULTS: "${{steps.subtraction-test.outputs.result}}"
+        MULTIPLICATION-TEST_RESULTS: "${{steps.multiplication-test.outputs.result}}"
+        DIVISION-TEST_RESULTS: "${{steps.division-test.outputs.result}}"
       with:
-        runners: addition-test,subtraction-test
+        runners: addition-test,subtraction-test,multiplication-test,division-test
